@@ -25,6 +25,10 @@ class NutritionContent : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        arguments?.let {
+            val id=NutritionContentArgs.fromBundle(it).id
+            println(id)
+        }
         liste_button.setOnClickListener {
             val action=NutritionContentDirections.contentToList()
             Navigation.findNavController(it).navigate(action)

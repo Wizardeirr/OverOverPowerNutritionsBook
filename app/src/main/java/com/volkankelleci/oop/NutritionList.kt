@@ -27,10 +27,7 @@ class NutritionList : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        icerik_button.setOnClickListener {
-            val action=NutritionListDirections.listToContent()
-            Navigation.findNavController(it).navigate(action)
-        }
+
     }
 
 
