@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigationcontainer"
+    app:startDestination="@id/nutritionList">
+    <fragment
+        android:id="@+id/nutritionList"
+        android:name="com.volkankelleci.oop.NutritionList"
+        android:label="fragment_nutrition_list"
+        tools:layout="@layout/fragment_nutrition_list" >
+        <action
+            android:id="@+id/list_to_content"
+            app:destination="@id/nutritionContent" />
+    </fragment>
+    <fragment
+        android:id="@+id/nutritionContent"
+        android:name="com.volkankelleci.oop.NutritionContent"
+        android:label="NutritionContent" >
+        <action
+            android:id="@+id/content_to_list"
+            app:destination="@id/nutritionList" />
+        <argument
+            android:name="nutritionID"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+</navigation>
