@@ -6,7 +6,7 @@
     app:startDestination="@id/nutritionList">
     <fragment
         android:id="@+id/nutritionList"
-        android:name="com.volkankelleci.oop.NutritionList"
+        android:name="com.volkankelleci.oop.view.NutritionList"
         android:label="fragment_nutrition_list"
         tools:layout="@layout/fragment_nutrition_list" >
         <action
@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/nutritionContent"
-        android:name="com.volkankelleci.oop.NutritionContent"
+        android:name="com.volkankelleci.oop.view.NutritionContent"
         android:label="NutritionContent" >
         <action
             android:id="@+id/content_to_list"
