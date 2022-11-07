@@ -9,11 +9,12 @@
     >
 
     <ImageView
+        android:id="@+id/resim"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="3"
 
-        tools:srcCompat="@tools:sample/backgrounds/scenic">
+        tools:srcCompat="@drawable/ic_launcher_background">
 
     </ImageView>
     <LinearLayout

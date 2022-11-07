@@ -1,21 +1,15 @@
-package com.volkankelleci.oop   .view
+package com.volkankelleci.oop.view
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.volkankelleci.oop.Adapter.NutritionRecyclerAdapter
 import com.volkankelleci.oop.R
-import com.volkankelleci.oop.model.nutrition
 import com.volkankelleci.oop.viewmodel.nutritionsViewModel
 import kotlinx.android.synthetic.main.fragment_nutrition_list.*
 
@@ -46,28 +40,30 @@ class NutritionList : Fragment() {
         recyclerView.layoutManager=LinearLayoutManager(context)
         recyclerView.adapter=recycler1
 
-
+observeLiveData()
 
     }
+
     fun observeLiveData(){
-        viewModel.nutritions.observe(this,Observer{
+        viewModel.nutritions.observe(viewLifecycleOwner,Observer{
             it?.let {
                 recyclerView.visibility=View.VISIBLE
                 recycler1.updateToNewNutritionList(it)
             }
         })
-        viewModel.errorMessage.observe(this,Observer{
+        viewModel.errorMessage.observe(viewLifecycleOwner,Observer{
             it?.let {
-                if(it==true){
+                if(it){
                     errorTextView.visibility=View.VISIBLE
+                    recyclerView.visibility=View.GONE
                 }else{
                     errorTextView.visibility=View.GONE
                 }
             }
         })
-        viewModel.progressBar.observe(this,Observer{
+        viewModel.progressBar.observe(viewLifecycleOwner,Observer{
             it?.let {
-                if (it==true){
+                if (it){
                     recyclerView.visibility=View.GONE
                     errorTextView.visibility=View.GONE
                     progressBar.visibility=View.VISIBLE
@@ -77,7 +73,6 @@ class NutritionList : Fragment() {
             }
         })
     }
-
 
 
 }
