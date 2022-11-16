@@ -3,21 +3,48 @@ package com.volkankelleci.oop.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.volkankelleci.oop.model.nutrition
+import com.volkankelleci.oop.model.nutritionRetrofit
+import com.volkankelleci.oop.nutritionAPI
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.observers.DisposableSingleObserver
+import io.reactivex.schedulers.Schedulers
+import io.reactivex.subscribers.DisposableSubscriber
 
 class nutritionsViewModel: ViewModel() {
     val nutritions=MutableLiveData<List<nutrition>>()
     val errorMessage=MutableLiveData<Boolean>()
     val progressBar=MutableLiveData<Boolean>()
+
+    private val nutritionAPIService=nutritionRetrofit()
+    private val disposable=CompositeDisposable()
     fun refreshData(){
-        val muz =nutrition("Muz","3","4","5","7","www.bombabomba.com")
-        val cilek =nutrition("cilek","4","6","8","10","www.bombabomba.com")
-        val armut =nutrition("armut","5","7","9","11","www.bombabomba.com")
 
-        val nutritionData= arrayListOf<nutrition>(muz,cilek,armut)
-        nutritions.value=nutritionData
-        errorMessage.value=false
-        progressBar.value=false
+    }
+    private fun takesToDataFromInternet(){
 
 
+
+        disposable.add(
+            nutritionAPIService.getdata()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object: DisposableSingleObserver<List<nutrition>>(){
+                    override fun onSuccess(t: List<nutrition>) {
+                        nutritions.value=t
+                        errorMessage.value=false
+                        progressBar.value=false
+
+                    }
+
+                    override fun onError(e: Throwable) {
+                        errorMessage.value=true
+                        progressBar.value=false
+                        e.printStackTrace()
+                    }
+
+                }
+
+        ))
     }
 }

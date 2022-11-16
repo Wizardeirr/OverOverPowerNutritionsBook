@@ -9,7 +9,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.volkankelleci.oop.R
 import com.volkankelleci.oop.viewmodel.NutritionContentViewModel
-import com.volkankelleci.oop.viewmodel.nutritionsViewModel
 import kotlinx.android.synthetic.main.fragment_nutrition_content.*
 
 class NutritionContent : Fragment() {
@@ -30,11 +29,12 @@ class NutritionContent : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel=ViewModelProvider(this).get(NutritionContentViewModel::class.java)
+        viewModel= ViewModelProvider(this)[NutritionContentViewModel::class.java]
         viewModel.roomVersionTake()
 
         observeLiveData()
     }
+
     fun observeLiveData(){
 
         viewModel.nutritionData.observe(viewLifecycleOwner, Observer{
