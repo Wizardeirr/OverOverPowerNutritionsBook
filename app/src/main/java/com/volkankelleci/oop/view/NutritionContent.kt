@@ -15,9 +15,7 @@ class NutritionContent : Fragment() {
     private lateinit var viewModel: NutritionContentViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -39,11 +37,11 @@ class NutritionContent : Fragment() {
 
         viewModel.nutritionData.observe(viewLifecycleOwner, Observer{
             it?.let {
-                besinismi.text=it.nutritionName
-                karbonhidratmiktari.text=it.nutritionCarbonhydrate
-                proteinmiktari.text=it.nutritionProtein
-                kaloriismi.text=it.nutritionkcal
-                yagmiktari.text=it.nutritionFat
+                besinismi.text=it.isim
+                karbonhidratmiktari.text=it.karbonhidrat
+                proteinmiktari.text=it.protein
+                kaloriismi.text=it.kalori
+                yagmiktari.text=it.yag
 
             }
         })

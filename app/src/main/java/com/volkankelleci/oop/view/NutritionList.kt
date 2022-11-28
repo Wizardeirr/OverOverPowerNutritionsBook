@@ -6,49 +6,56 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.volkankelleci.oop.Adapter.NutritionRecyclerAdapter
 import com.volkankelleci.oop.R
 import com.volkankelleci.oop.viewmodel.nutritionsViewModel
 import kotlinx.android.synthetic.main.fragment_nutrition_list.*
 
 class NutritionList : Fragment() {
-
     private lateinit var viewModel:nutritionsViewModel
-    private val recycler1 = NutritionRecyclerAdapter(arrayListOf())
+    private val recycler1=NutritionRecyclerAdapter(arrayListOf())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-
         return inflater.inflate(R.layout.fragment_nutrition_list, container, false)
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel=ViewModelProvider(this).get(nutritionsViewModel::class.java)
-        viewModel.refreshData()
+//ÜST TARAFA FRAGMENT KISMI DOKUNMA WITHOUT lateinitvar
 
+      viewModel=ViewModelProvider(this).get(nutritionsViewModel::class.java)
         recyclerView.layoutManager=LinearLayoutManager(context)
         recyclerView.adapter=recycler1
+
+        swipeRefreshLayout.setOnRefreshListener {
+
+            progressBar.visibility=View.VISIBLE
+            errorTextView.visibility=View.GONE
+            recyclerView.visibility=View.GONE
+            viewModel.refreshData()
+            swipeRefreshLayout.isRefreshing=false
+        }
 
 observeLiveData()
 
     }
 
     fun observeLiveData(){
-        viewModel.nutritions.observe(viewLifecycleOwner,Observer{
-            it?.let {
+        viewModel.nutritions.observe(viewLifecycleOwner, Observer {
+            it.let {
                 recyclerView.visibility=View.VISIBLE
                 recycler1.updateToNewNutritionList(it)
+
             }
         })
         viewModel.errorMessage.observe(viewLifecycleOwner,Observer{
@@ -58,6 +65,7 @@ observeLiveData()
                     recyclerView.visibility=View.GONE
                 }else{
                     errorTextView.visibility=View.GONE
+
                 }
             }
         })
