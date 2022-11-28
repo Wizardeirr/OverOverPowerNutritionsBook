@@ -21,7 +21,7 @@
             android:id="@+id/content_to_list"
             app:destination="@id/nutritionList" />
         <argument
-            android:name="id"
+            android:name="besinID"
             app:argType="integer" />
     </fragment>
 </navigation>

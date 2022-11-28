@@ -1,18 +1,14 @@
 package com.volkankelleci.oop.Adapter
 
-import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import androidx.compose.ui.layout.Layout
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.volkankelleci.oop.R
 import com.volkankelleci.oop.Util.gorselIndır
 import com.volkankelleci.oop.Util.placeHolderYap
 import com.volkankelleci.oop.model.nutrition
-import com.volkankelleci.oop.view.NutritionContentDirections
 import com.volkankelleci.oop.view.NutritionListDirections
 import kotlinx.android.synthetic.main.nutrition_recycler_row.view.*
 
@@ -31,7 +27,7 @@ class NutritionRecyclerAdapter(val nutritionList:ArrayList<nutrition>): Recycler
         holder.itemView.nutritionname.text=nutritionList.get(position).isim
         holder.itemView.nutritionkcal.text=nutritionList.get(position).kalori
         holder.itemView.setOnClickListener{
-            val action=NutritionListDirections.listToContent(0)
+            val action=NutritionListDirections.listToContent(nutritionList.get(position).uuid)
             Navigation.findNavController(it).navigate(action)
         }
         holder.itemView.resim.gorselIndır(nutritionList.get(position)

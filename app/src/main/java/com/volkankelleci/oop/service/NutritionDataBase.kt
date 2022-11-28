@@ -8,7 +8,7 @@ import com.volkankelleci.oop.Adapter.NutritionRecyclerAdapter
 import com.volkankelleci.oop.model.nutrition
 
 @Database(entities = arrayOf(nutrition::class), version = 1)
-abstract class NutritionDataBase :RoomDatabase() {
+abstract class NutritionDataBase:RoomDatabase() {
     abstract fun besinDAO():DAO
 
     //Singleton : Tek bir obje oluşturmak için Companion Object içine koymamız lazım
@@ -17,7 +17,7 @@ abstract class NutritionDataBase :RoomDatabase() {
         //Volatile diğer tredlere de görünür yapar.
         @Volatile private var instance:NutritionDataBase?=null
         private val lock=Any()
-        operator fun invoke(context:Context) = instance ?: synchronized(lock){
+        operator fun invoke (context:Context) = instance ?: synchronized(lock){
             instance?: dataBaseOlustur(context).also {
                 instance=it
             }
@@ -26,7 +26,6 @@ abstract class NutritionDataBase :RoomDatabase() {
         //eğer oluşturulmadıysa senkronize yap.
         //instance?: = Elvis Operatürü.
         private fun dataBaseOlustur(context: Context)= Room.databaseBuilder(
-            context.applicationContext,
-            NutritionDataBase::class.java,"besinDataBase").build()
+            context.applicationContext,NutritionDataBase::class.java,"besinDataBase").build()
     }
 }
